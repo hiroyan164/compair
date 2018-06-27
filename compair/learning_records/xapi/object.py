@@ -17,10 +17,10 @@ class XAPIObject(object):
             ret["duration"] = attempt_mixin_object.attempt_duration
 
         if attempt_mixin_object.attempt_started:
-            ret["startedAtTime"] = attempt_mixin_object.attempt_started.replace(tzinfo=pytz.utc).isoformat()
+            ret["startedAtTime"] = attempt_mixin_object.attempt_started.replace(tzinfo=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
 
         if attempt_mixin_object.attempt_ended:
-            ret["endedAtTime"] = attempt_mixin_object.attempt_ended.replace(tzinfo=pytz.utc).isoformat()
+            ret["endedAtTime"] = attempt_mixin_object.attempt_ended.replace(tzinfo=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
 
         return ret
 
