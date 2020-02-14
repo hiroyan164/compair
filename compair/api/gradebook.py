@@ -1,5 +1,3 @@
-from __future__ import division
-
 import copy
 
 from bouncer.constants import MANAGE

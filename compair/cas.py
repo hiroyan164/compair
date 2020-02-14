@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from flask import current_app, url_for
 from caslib import SAMLClient, CASClient, CASResponse
 from xml.dom.minidom import parseString
