@@ -45,6 +45,9 @@ class ResourceIRI(object):
         return cls._get_app_url()+'criterion/'+criterion_uuid
 
 
+    @classmethod
+    def group(cls, course_uuid, group_uuid):
+        return cls.course(course_uuid)+'/group/'+group_uuid
 
     @classmethod
     def assignment(cls, course_uuid, assignment_uuid):

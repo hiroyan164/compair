@@ -91,6 +91,21 @@ class CaliperEntities(object):
         )
 
     @classmethod
+    def group(cls, group):
+        members = [
+            CaliperActor.generate_actor(uc.user) for uc in group.user_courses.all()
+        ]
+
+        return caliper.entities.Group(
+            id=ResourceIRI.group(group.course_uuid, group.uuid),
+            name=group.name,
+            subOrganizationOf=ResourceIRI.course(group.course_uuid),
+            members=members,
+            dateCreated=group.created.replace(tzinfo=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+            dateModified=group.modified.replace(tzinfo=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z',
+        )
+
+    @classmethod
     def session(cls, caliper_actor, request=None, extensions={}):
         if sess.get('login_method') != None:
             extensions["login_method"] = sess.get('login_method')
@@ -278,13 +293,24 @@ class CaliperEntities(object):
     def answer_attempt(cls, answer):
         (duration, startedAtTime, endedAtTime) = cls._basic_attempt(answer)
 
+        assignee = None
+        extensions = {}
+
+        # Caliper v1.1, v1.2 doesn't easily support tracking group submissions
+        # might be able to use assignee in v1.3 https://github.com/IMSGlobal/caliper-spec/issues/535
+        if answer.group_id != None:
+            extensions['group'] = CaliperEntities.group(answer.group).as_dict()
+        else:
+            assignee = CaliperActor.generate_actor(answer.user)
+
         return caliper.entities.Attempt(
             id=ResourceIRI.answer_attempt(answer.course_uuid, answer.assignment_uuid, answer.attempt_uuid),
-            assignee=CaliperActor.generate_actor(answer.user),
+            assignee=assignee,
             assignable=CaliperEntities.assignment_question(answer.assignment),
             duration=duration,
             startedAtTime=startedAtTime,
-            endedAtTime=endedAtTime
+            endedAtTime=endedAtTime,
+            extensions=extensions
         )
 
 

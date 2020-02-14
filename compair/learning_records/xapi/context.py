@@ -103,6 +103,9 @@ class XAPIContext(object):
         if answer.attempt_uuid:
             context.context_activities.parent.append(XAPIObject.answer_attempt(answer))
 
+        if answer.group_id != None:
+            context.context_activities.parent.append(XAPIObject.group(answer.group))
+
         cls._add_sis_data(context, answer.assignment.course)
         return context
 
