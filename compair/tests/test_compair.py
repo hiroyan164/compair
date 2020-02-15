@@ -375,7 +375,7 @@ class ComPAIRLearningRecordTestCase(ComPAIRTestCase):
             'type': 'SoftwareApplication',
             'name': 'ComPAIR',
             'description': 'The ComPAIR learning application pairs student answers for deeper learning through comparison of peer work.',
-            'version': '1.2.1'
+            'version': '1.2.4'
         })
         del event['edApp']
 

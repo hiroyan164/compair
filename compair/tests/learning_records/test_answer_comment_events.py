@@ -543,6 +543,21 @@ class AnswerCommentLearningRecordTests(ComPAIRLearningRecordTestCase):
                         'session': self.get_caliper_session(self.get_compair_caliper_actor(self.user)),
                         'type': 'AssessmentEvent'
                     })
+                    expected_caliper_events.append({
+                        'action': 'Used',
+                        'profile': 'ToolUseProfile',
+                        'actor': self.get_compair_caliper_actor(self.user),
+                        'membership': self.get_caliper_membership(self.course, self.user, self.lti_context),
+                        'object': {
+                            'id': self.app_base_url.rstrip("/"),
+                            'type': 'SoftwareApplication',
+                            'name': 'ComPAIR',
+                            'description': 'The ComPAIR learning application pairs student answers for deeper learning through comparison of peer work.',
+                            'version': '1.2.4'
+                        },
+                        'session': self.get_caliper_session(self.get_compair_caliper_actor(self.user)),
+                        'type': 'ToolUseEvent'
+                    })
                     self.assertEqual(len(events), len(expected_caliper_events))
                     for index, expected_event in enumerate(expected_caliper_events):
                         self.assertEqual(events[index], expected_event)
@@ -901,6 +916,21 @@ class AnswerCommentLearningRecordTests(ComPAIRLearningRecordTestCase):
                         },
                         'session': self.get_caliper_session(self.get_compair_caliper_actor(self.user)),
                         'type': 'AssessmentEvent'
+                    })
+                    expected_caliper_events.append({
+                        'action': 'Used',
+                        'profile': 'ToolUseProfile',
+                        'actor': self.get_compair_caliper_actor(self.user),
+                        'membership': self.get_caliper_membership(self.course, self.user, self.lti_context),
+                        'object': {
+                            'id': self.app_base_url.rstrip("/"),
+                            'type': 'SoftwareApplication',
+                            'name': 'ComPAIR',
+                            'description': 'The ComPAIR learning application pairs student answers for deeper learning through comparison of peer work.',
+                            'version': '1.2.4'
+                        },
+                        'session': self.get_caliper_session(self.get_compair_caliper_actor(self.user)),
+                        'type': 'ToolUseEvent'
                     })
                     self.assertEqual(len(events), len(expected_caliper_events))
                     for index, expected_event in enumerate(expected_caliper_events):

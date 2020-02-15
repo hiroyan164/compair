@@ -377,6 +377,13 @@ def learning_record_on_answer_comment_create(sender, user, **extra):
                 **CaliperEvent._defaults(user, course=answer_comment.answer.assignment.course)
             ))
 
+            CaliperSensor.emit(caliper.events.ToolUseEvent(
+                action=caliper.constants.CALIPER_ACTIONS["USED"],
+                profile=caliper.constants.CALIPER_PROFILES['TOOL_USE'],
+                object=CaliperEntities.compair_app(),
+                **CaliperEvent._defaults(user, course=answer_comment.answer.assignment.course)
+            ))
+
     else:
         # (public or private)
 
@@ -519,6 +526,13 @@ def learning_record_on_answer_comment_modified(sender, user, **extra):
                 **CaliperEvent._defaults(user, course=answer_comment.answer.assignment.course)
             ))
 
+            CaliperSensor.emit(caliper.events.ToolUseEvent(
+                action=caliper.constants.CALIPER_ACTIONS["USED"],
+                profile=caliper.constants.CALIPER_PROFILES['TOOL_USE'],
+                object=CaliperEntities.compair_app(),
+                **CaliperEvent._defaults(user, course=answer_comment.answer.assignment.course)
+            ))
+
     else:
         # (public or private)
 
@@ -604,6 +618,13 @@ def learning_record_on_answer_create(sender, user, **extra):
             **CaliperEvent._defaults(user, course=answer.assignment.course)
         ))
 
+        CaliperSensor.emit(caliper.events.ToolUseEvent(
+            action=caliper.constants.CALIPER_ACTIONS["USED"],
+            profile=caliper.constants.CALIPER_PROFILES['TOOL_USE'],
+            object=CaliperEntities.compair_app(),
+            **CaliperEvent._defaults(user, course=answer.assignment.course)
+        ))
+
 # on_answer_modified
 # drafted answer_solution + suspended assignment_question (draft)
 # submitted answer_solution + completed assignment_question (not draft)
@@ -641,6 +662,13 @@ def learning_record_on_answer_modified(sender, user, **extra):
             profile=caliper.constants.CALIPER_PROFILES['ASSESSMENT'],
             object=CaliperEntities.assignment(answer.assignment),
             generated=CaliperEntities.assignment_attempt(answer.assignment, answer, user),
+            **CaliperEvent._defaults(user, course=answer.assignment.course)
+        ))
+
+        CaliperSensor.emit(caliper.events.ToolUseEvent(
+            action=caliper.constants.CALIPER_ACTIONS["USED"],
+            profile=caliper.constants.CALIPER_PROFILES['TOOL_USE'],
+            object=CaliperEntities.compair_app(),
             **CaliperEvent._defaults(user, course=answer.assignment.course)
         ))
 
@@ -776,6 +804,13 @@ def learning_record_on_comparison_update(sender, user, **extra):
             profile=caliper.constants.CALIPER_PROFILES['ASSESSMENT'],
             object=CaliperEntities.assignment(comparison.assignment),
             generated=CaliperEntities.assignment_attempt(comparison.assignment, comparison, user),
+            **CaliperEvent._defaults(user, course=comparison.assignment.course)
+        ))
+
+        CaliperSensor.emit(caliper.events.ToolUseEvent(
+            action=caliper.constants.CALIPER_ACTIONS["USED"],
+            profile=caliper.constants.CALIPER_PROFILES['TOOL_USE'],
+            object=CaliperEntities.compair_app(),
             **CaliperEvent._defaults(user, course=comparison.assignment.course)
         ))
 
